@@ -1,12 +1,6 @@
 import character from "../data/character.json";
 import CharacterListItem from "./CharacterListItem";
-import {
-  ActivityIndicator,
-  FlatList,
-  Text,
-  View,
-  useWindowDimensions,
-} from "react-native";
+import { ActivityIndicator, FlatList, useWindowDimensions } from "react-native";
 import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 
 const initialPage = "https://rickandmortyapi.com/api/character";
@@ -15,6 +9,7 @@ const MyList = () => {
   const [loading, setLoading] = useState(false);
   const [items, setItems] = useState([]);
   const [nextPage, setNextPage] = useState("");
+  const [key, setKey] = useState("");
 
   const { width } = useWindowDimensions();
 
@@ -80,6 +75,7 @@ const MyList = () => {
 
   return (
     <FlatList
+      key={key} // this to make the number of columen 1
       data={items}
       renderItem={renderItem}
       contentContainerStyle={{ gap: 10 }}
@@ -90,7 +86,7 @@ const MyList = () => {
       refreshing={loading}
       onRefresh={onRefresh}
       debug
-      // removeClippedSubviews={true}
+      //   removeClippedSubviews={true}
       initialNumToRender={3}
       getItemLayout={(data, index) => ({
         length: itemHeight,
@@ -98,7 +94,7 @@ const MyList = () => {
         index,
       })}
       viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
-      numColumns={2}
+      numColumns={3}
     />
   );
 };
